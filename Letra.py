@@ -9,7 +9,8 @@ def B ( coorArr , i , j , t ) :
 P = np.array ([[0. , 0.] ,[0. , 10.] , #Recta
     [0. , 8.] , 
     [1.5 ,9.5], [3.5 ,10.], [5.5, 10.5], [6., 10.], [5.5 , 8.],  
-    [6.5, 3.] ,[5.5 , 8.] ,
+    [4.5 , 7.5], [5. , 7.],
+    [6., 3.] ,[5.5 , 8.] , 
     [7. ,9.5], [9. , 10.] ,[11., 10.5], [11.5, 10.], [11. , 8.] ,
     [12.5, 3.] ,[13.2, 1.7] ,[14.5, 1.]]) #Dos curvas de 3º
 
@@ -70,12 +71,22 @@ for k in range (0 , 2) :
     ini = fin -1
     fin = ini + n
 
+###### ACABAR ESTA, está feucha
+P4= np.array([[5.5 ,8.], [4.5 , 7.5], [5. , 7.], [6. ,3.]]) 
 
-P4= np.array([[6.5 ,3.] ,[5.5 ,8.]]) #Falta aux
+ini =0; fin = 4
 
-
-
-
+for k in range (0 , 2) :
+    x = P4 [ ini : fin ,0]; y = P4 [ ini : fin ,1]; n = x . size
+    xb =[]; yb =[]
+    for t in np . linspace (0. ,1. ,25) :
+        a = B (x , 0 , n - 1 , t )
+        b = B (y , 0 , n - 1 , t )
+        xb . append ( a )
+        yb . append ( b )
+    plt . plot ( xb , yb )
+    ini = fin -1
+    fin = ini + n
 
 P5= np.array([[5.5 , 8.], [7. ,9.5], [9. , 10.]])
 
@@ -108,6 +119,7 @@ for k in range (0 , 2) :
     plt . plot ( xb , yb )
     ini = fin -1
     fin = ini + n
+
 
 P7= np.array([[11. , 8.] ,[12.5, 3.]]) #Falta aux
 
