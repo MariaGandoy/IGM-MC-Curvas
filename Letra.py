@@ -16,11 +16,17 @@ def Curva (ran, ini, fin, P):
             b = B (y , 0 , n - 1 , t )
             xb . append ( a )
             yb . append ( b )
-        plt . plot ( xb , yb, "red" )
+        plt . plot ( xb , yb, "purple", linewidth = 3)
         ini = fin -1
         fin = ini + n
 
-    plt.plot( P [: ,0] , P [: ,1] , 'ko', P [: ,0] , P [: ,1] , 'c--' , ms =3)
+    plt.plot(  P [: ,0] , P [: ,1] , 'c--', P [: ,0] , P [: ,1] , 'bo', ms =4)
+
+    
+
+
+P0= np.array([[-2. , 6.],[-0.5 , 10.5],[-5. , 3.5],[0., 9.5]])
+Curva(2, 0, 4, P0)    
 
 P1= np.array([[0. , 0.] ,[0. , 9.5]])
 Curva(1, 0, 2, P1)
