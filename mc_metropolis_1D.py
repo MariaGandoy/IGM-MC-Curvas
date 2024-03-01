@@ -4,6 +4,19 @@ import numpy as np
 g1 = lambda x:2*(x[0] + x[1])
 f  = lambda x:np.sin(x)/2
 
+# integral[0, pi] x * sin(x) dx
+
+#   c = integral[0, pi] sin(x) dx = 2
+#
+#   integral[0, pi] (c * x) * (sin(x) / c) dx , c = 2
+#   
+#   g(x) = c * x
+#   p(x) = sin(x) / c => 
+#       
+#           integral[0, pi] sin(x) / c dx = 1
+#           integral[0, pi] (f(x) / c) dx = 1 , f(x) = sin(x)
+
+
 a = 0
 b = np.pi
 nsim = 1550 # numero de puntos a generar
