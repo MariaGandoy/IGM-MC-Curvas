@@ -31,7 +31,7 @@ def montecarloCrudo(nsims, a, b):
 
 a = [0, 0]
 b = [(np.pi / 2), 1]
-nsim = 1000 # numero de puntos a generar
+nsim = 10000 # numero de puntos a generar
 x = []
 y = []
 Ia = 0 # para aproximar la esperanza
@@ -41,8 +41,8 @@ y0 = np.random.uniform(a[1], b[1])
 x.append(x0)
 y.append(y0)
 for n in range(1, nsim):
-    gx = np.random.uniform(-1.2, 30)
-    gy = np.random.uniform(-1.2, 30)
+    gx = np.random.uniform(-1.2, 1.2)
+    gy = np.random.uniform(-1.2, 1.2)
     xs = x0 + gx
     ys = y0 + gy
     # controlo no salirme
@@ -52,7 +52,9 @@ for n in range(1, nsim):
         ys = a[1] + (b[1] - a[1]) * v[1]
     #mc = montecarloCrudo()
     mc = montecarloCrudo(nsim, a[0], b[0])
-    c = [f(xs, mc) / f(x0, mc), f(ys, mc) / f(x0, mc)]
+    f1 = f(xs, mc) / f(x0, mc)
+    f2 = f(ys, mc) / f(x0, mc)
+    c = [f1, f2]
     A= [0., 0.]
     A[0] = np.minimum(1., c[0])
     A[1] = np.minimum(1., c[1])
@@ -64,7 +66,7 @@ for n in range(1, nsim):
         y.append(y0)
         Naceptados += 1
         Ia += g1(x, y, mc)
-    elif A[0] < 1. and A[1] < 1.:
+    elif A[0] < 1. or A[1] < 1.:
         u = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         if u[0] < A[0] and u[1] < A[1]:
             x0 = xs
@@ -75,14 +77,7 @@ for n in range(1, nsim):
             Ia += g1(x, y, mc)
 
 Ia /= Naceptados
-print('Ia = ', Ia)
-h = lambda x, y: np.cos(x + y) * np.exp(x)
-xx = np.linspace(a[0], b[0])
-yy = np.linspace(a[1], b[1])
-plt.plot(h(xx, yy), "red")
-plt.plot(x, y, 'x')
-
-plt.show()
+print('Caso 1 = ', Ia)
 
 
 #
@@ -98,7 +93,7 @@ plt.show()
 #           integral[0, pi/2] integral[0, 1] (f(x, y) / c) dx dy = 1 , f(x, y) = cos(x + y)
 
 g1  = lambda x, c:np.exp(x[0] + x[1]) * c
-f   = lambda x, y, c: np.cos(x, y) / c
+f   = lambda x, y, c: np.cos(x + y) / c
 
 def montecarloCrudo(nsims, a1, b1, a2, b2):
     f = lambda x, y: np.cos(x + y)
@@ -113,7 +108,7 @@ def montecarloCrudo(nsims, a1, b1, a2, b2):
 
 a = [0, 0]
 b = [(np.pi / 2), 1]
-nsim = 3000 # numero de puntos a generar
+nsim = 10000 # numero de puntos a generar
 x = []
 y = []
 Ia = 0 # para aproximar la esperanza
@@ -146,7 +141,7 @@ for n in range(1, nsim):
         x.append(x0)
         y.append(y0)
         Naceptados += 1
-        Ia += g1(x, y, mc)
+        Ia += g1(x, mc)
     elif A[0] < 1. or A[1] < 1.:
         u = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         if u[0] < A[0] and u[1] < A[1]:
@@ -155,10 +150,7 @@ for n in range(1, nsim):
             x.append(x0)
             y.append(y0)
             Naceptados += 1
-            Ia += g1(x, y, mc)
+            Ia += g1(x, mc)
 
 Ia /= Naceptados
-print('Ia = ', Ia)
-# xx = np.linspace(a, b)
-# plt.plot(xx, f(xx))
-# plt.plot(x, np.zeros_like(x), 'x')
+print('Caso 2 = ', Ia)
