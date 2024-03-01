@@ -39,13 +39,14 @@ for n in range(1, nsim):
     if (xs < a[0] or xs > b[0] or ys < a[1] or ys > b[1]):
         v = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         xs = a + (b - a) * v
-    # c = f(xs) / f(x0)
-    # A = np.minimum(1., c)
+    mc = montecarloCrudo()
+    c = [f(xs, mc) / f(x0, mc), f(ys, mc) / f(x0, mc)]
+    A = np.minimum(1., c)
     if A[0] == 1 and A[1] == 1:
         x0 = xs
         x.append(x0)
         Naceptados += 1
-        Ia += g1(x, y, c)
+        Ia += g1(x, y, mc)
     elif A[0] < 1. or A[1] < 1.:
         u = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         if u[0] < A[0] and u[1] < A[1]:
@@ -54,7 +55,7 @@ for n in range(1, nsim):
             x.append(x0)
             y.append(y0)
             Naceptados += 1
-            Ia += g1(x, y, c)
+            Ia += g1(x, y, mc)
 Ia /= Naceptados
 print('Ia = ', Ia)
 # xx = np.linspace(a, b)
@@ -97,13 +98,14 @@ for n in range(1, nsim):
     if (xs < a[0] or xs > b[0] or ys < a[1] or ys > b[1]):
         v = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         xs = a + (b - a) * v
-    # c = f(xs) / f(x0)
-    # A = np.minimum(1., c)
+    mc = montecarloCrudo()
+    c = [f(xs, mc) / f(x0, mc), f(ys, mc) / f(x0, mc)]
+    A = np.minimum(1., c)
     if A[0] == 1 and A[1] == 1:
         x0 = xs
         x.append(x0)
         Naceptados += 1
-        Ia += g1(x, y, c)
+        Ia += g1(x, y, mc)
     elif A[0] < 1. or A[1] < 1.:
         u = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         if u[0] < A[0] and u[1] < A[1]:
@@ -112,7 +114,7 @@ for n in range(1, nsim):
             x.append(x0)
             y.append(y0)
             Naceptados += 1
-            Ia += g1(x, y, c)
+            Ia += g1(x, y, mc)
 Ia /= Naceptados
 print('Ia = ', Ia)
 # xx = np.linspace(a, b)
