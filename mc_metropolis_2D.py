@@ -23,7 +23,7 @@ def montecarloCrudo(nsims, a, b):
     f = lambda x: np.exp(x)
     Ia = 0.
 
-    for n in range(1, nsmis):
+    for n in range(1, nsims):
         x = np.random.uniform(a, b)
         Ia += f(x)
 
@@ -31,7 +31,7 @@ def montecarloCrudo(nsims, a, b):
 
 a = [0, 0]
 b = [(np.pi / 2), 1]
-nsim = 1550 # numero de puntos a generar
+nsim = 1000 # numero de puntos a generar
 x = []
 y = []
 Ia = 0 # para aproximar la esperanza
@@ -41,8 +41,8 @@ y0 = np.random.uniform(a[1], b[1])
 x.append(x0)
 y.append(y0)
 for n in range(1, nsim):
-    gx = np.random.uniform(-1.2, 1.2)
-    gy = np.random.uniform(-1.2, 1.2)
+    gx = np.random.uniform(-1.2, 30)
+    gy = np.random.uniform(-1.2, 30)
     xs = x0 + gx
     ys = y0 + gy
     # controlo no salirme
@@ -53,7 +53,10 @@ for n in range(1, nsim):
     #mc = montecarloCrudo()
     mc = montecarloCrudo(nsim, a[0], b[0])
     c = [f(xs, mc) / f(x0, mc), f(ys, mc) / f(x0, mc)]
-    A = np.minimum(1., c)
+    A= [0., 0.]
+    A[0] = np.minimum(1., c[0])
+    A[1] = np.minimum(1., c[1])
+
     if A[0] == 1 and A[1] == 1:
         x0 = xs
         y0 = ys
@@ -61,7 +64,7 @@ for n in range(1, nsim):
         y.append(y0)
         Naceptados += 1
         Ia += g1(x, y, mc)
-    elif A[0] < 1. or A[1] < 1.:
+    elif A[0] < 1. and A[1] < 1.:
         u = [np.random.uniform(0, 1), np.random.uniform(0, 1)]
         if u[0] < A[0] and u[1] < A[1]:
             x0 = xs
@@ -73,9 +76,13 @@ for n in range(1, nsim):
 
 Ia /= Naceptados
 print('Ia = ', Ia)
-# xx = np.linspace(a, b)
-# plt.plot(xx, f(xx))
-# plt.plot(x, np.zeros_like(x), 'x')
+h = lambda x, y: np.cos(x + y) * np.exp(x)
+xx = np.linspace(a[0], b[0])
+yy = np.linspace(a[1], b[1])
+plt.plot(h(xx, yy), "red")
+plt.plot(x, y, 'x')
+
+plt.show()
 
 
 #
@@ -97,16 +104,16 @@ def montecarloCrudo(nsims, a1, b1, a2, b2):
     f = lambda x, y: np.cos(x + y)
     Ia = 0.
 
-    for n in range(1, nsmis):
+    for n in range(1, nsims):
         x = np.random.uniform(a1, b1)
-        x = np.random.uniform(a2, b2)
+        y = np.random.uniform(a2, b2)
         Ia += f(x, y)
 
     return (Ia / nsims)
 
 a = [0, 0]
 b = [(np.pi / 2), 1]
-nsim = 1550 # numero de puntos a generar
+nsim = 3000 # numero de puntos a generar
 x = []
 y = []
 Ia = 0 # para aproximar la esperanza

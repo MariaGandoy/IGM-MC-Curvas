@@ -19,7 +19,7 @@ f  = lambda x:np.sin(x)/2
 
 a = 0
 b = np.pi
-nsim = 1550 # numero de puntos a generar
+nsim = 3000 # numero de puntos a generar
 x = []
 Ia = 0 # para aproximar la esperanza
 Naceptados = 0
