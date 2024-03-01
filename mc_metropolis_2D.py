@@ -44,7 +44,9 @@ for n in range(1, nsim):
     A = np.minimum(1., c)
     if A[0] == 1 and A[1] == 1:
         x0 = xs
+        y0 = ys
         x.append(x0)
+        y.append(y0)
         Naceptados += 1
         Ia += g1(x, y, mc)
     elif A[0] < 1. or A[1] < 1.:
@@ -103,7 +105,9 @@ for n in range(1, nsim):
     A = np.minimum(1., c)
     if A[0] == 1 and A[1] == 1:
         x0 = xs
+        y0 = ys
         x.append(x0)
+        y.append(y0)
         Naceptados += 1
         Ia += g1(x, y, mc)
     elif A[0] < 1. or A[1] < 1.:
